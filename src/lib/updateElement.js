@@ -5,10 +5,17 @@ function updateAttributes(target, originNewProps, originOldProps) {
   for (let [attr, value] of Object.entries(originNewProps)) {
     if (originOldProps[attr] === originNewProps[attr]) continue;
 
-    if (attr.startsWith("on")) {
+    if (attr.startsWith("on") && typeof originNewProps[attr] === "function") {
       // onClick -> click on이름 제거
       const eventType = attr.slice(2).toLowerCase();
+
+      // onEvent가 먼저 등록되어있으면 제거
+      if (typeof originOldProps[attr] === "function") {
+        removeEvent(target, eventType, originOldProps[attr]);
+      }
+
       addEvent(target, eventType, originNewProps[attr]);
+      continue;
     }
 
     if (attr === "className") {

@@ -12,6 +12,7 @@ export const Post = ({
   activationLike = false,
 }) => {
   const { loggedIn, currentUser, posts } = globalStore.getState();
+  const isLiked = currentUser && likeUsers.includes(currentUser.username);
 
   const handleLikeClick = (e) => {
     e.preventDefault();
@@ -29,7 +30,6 @@ export const Post = ({
       );
     } else {
       post.likeUsers.push(currentUser.username);
-      activationLike = true;
     }
 
     globalStore.setState({ posts });
@@ -46,7 +46,7 @@ export const Post = ({
       <p>{content}</p>
       <div className="mt-2 flex justify-between text-gray-500">
         <span
-          className={`like-button cursor-pointer${activationLike ? " text-blue-500" : ""}`}
+          className={`like-button cursor-pointer${isLiked ? " text-blue-500" : ""}`}
           onClick={handleLikeClick}
         >
           좋아요 {likeUsers.length}

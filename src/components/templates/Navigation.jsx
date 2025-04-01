@@ -4,7 +4,9 @@ import { router } from "../../router";
 import { globalStore } from "../../stores";
 
 const getNavItemClass = (path) => {
-  const currentPath = window.location.pathname;
+  const currentPath = window.location.pathname.includes("index.hash.html")
+    ? window.location.hash.slice(1)
+    : window.location.pathname;
   return currentPath === path ? "text-blue-600 font-bold" : "text-gray-600";
 };
 
