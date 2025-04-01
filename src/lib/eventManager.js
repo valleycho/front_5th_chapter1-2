@@ -7,6 +7,7 @@ const EVENT_TYPES = [
   "keydown",
   "keyup",
   "keypress",
+  "submit",
 ];
 
 function setEventHandlers(e) {
