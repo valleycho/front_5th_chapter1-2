@@ -4,7 +4,8 @@ export const createRouter = (routes) => {
   const { subscribe, notify } = createObserver();
 
   const getPath = () => {
-    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const baseUrl =
+      import.meta.env.MODE === "production" ? "/front_5th_chapter1-2" : "";
     return window.location.pathname.replace(baseUrl, "") || "/";
   };
 
