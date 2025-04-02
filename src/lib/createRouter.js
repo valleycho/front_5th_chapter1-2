@@ -5,13 +5,23 @@ export const createRouter = (routes) => {
 
   const getPath = () => {
     const baseUrl = import.meta.env.VITE_BASE_URL;
-    return window.location.pathname.replace(baseUrl, "");
+    return window.location.pathname.replace(baseUrl, "") || "/";
   };
 
   const getTarget = () => routes[getPath()];
 
   const push = (path) => {
-    window.history.pushState(null, null, `${getPath()}${path}`);
+    if (import.meta.env.MODE === "development") {
+      window.history.pushState(null, null, path);
+    } else {
+      const baseUrl =
+        import.meta.env.MODE === "production"
+          ? import.meta.env.VITE_BASE_URL
+          : "";
+      const fullPath = baseUrl + path;
+
+      window.history.pushState(null, null, fullPath);
+    }
     notify();
   };
 
